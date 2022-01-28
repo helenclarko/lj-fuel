@@ -345,19 +345,26 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-	local bones = {
-		'wheel_lr',
-		'wheel_rr'
-	}
-	exports['qb-target']:AddTargetBone(bones, {
-		options = {
-		{
-			type = "client",
-			event = "lj-fuel:client:SendMenuToServer",
-			icon = "fas fa-gas-pump",
-			label = "Refuel Vehicle",
-		}
-	},
-		distance = 1.5,
-	})
+    local bones = {
+        'wheel_lr',
+        'wheel_rr'
+    }
+    exports['qb-target']:AddTargetBone(bones, {
+        options = {
+        {
+            type = "client",
+            event = "lj-fuel:client:SendMenuToServer",
+            icon = "fas fa-gas-pump",
+            label = "Refuel Vehicle",
+            canInteract = function()
+                if HasPedGotWeapon(PlayerPedId(), 883325847) or inGasStation then
+                    return true
+                else
+                    return false
+                end
+            end,
+        }
+    },
+        distance = 1.5,
+    })
 end)
